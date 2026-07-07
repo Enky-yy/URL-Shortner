@@ -194,7 +194,7 @@ Response:
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Enky-yy/URL-Shortner.git
 cd url_shortner
 ```
 
