@@ -19,8 +19,9 @@ jobs:
             echo "Please add RENDER_APP_URL in GitHub Repository Settings -> Secrets and variables -> Actions."
             exit 1
           fi
+          URL="${URL%/}"
           echo "Pinging $URL/healthy ..."
-          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL/healthy")
+          STATUS_CODE=$(curl -s -L -o /dev/null -w "%{http_code}" --max-time 45 "$URL/healthy")
           echo "Received HTTP status: $STATUS_CODE"
           if [ "$STATUS_CODE" -eq 200 ] || [ "$STATUS_CODE" -eq 301 ] || [ "$STATUS_CODE" -eq 302 ]; then
             echo "Render service is awake and healthy!"
