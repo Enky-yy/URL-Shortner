@@ -11,7 +11,7 @@ jobs:
     name: Ping Render Health / Status Endpoint
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Syntrak Server
+      - name: Ping ShortURL Server
         run: |
           URL="${{ secrets.RENDER_APP_URL }}"
           if [ -z "$URL" ]; then
@@ -19,8 +19,8 @@ jobs:
             echo "Please add RENDER_APP_URL in GitHub Repository Settings -> Secrets and variables -> Actions."
             exit 1
           fi
-          echo "Pinging $URL/api/session/status ..."
-          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL/api/session/status")
+          echo "Pinging $URL/healthy ..."
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL/healthy")
           echo "Received HTTP status: $STATUS_CODE"
           if [ "$STATUS_CODE" -eq 200 ] || [ "$STATUS_CODE" -eq 301 ] || [ "$STATUS_CODE" -eq 302 ]; then
             echo "Render service is awake and healthy!"
